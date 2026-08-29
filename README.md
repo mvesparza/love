@@ -29,7 +29,18 @@ export const SUBTITLE = 'desde el 30 de agosto de 2025'
 export const FOOTER = 'te amo'
 ```
 
-Los colores están en [`src/styles.css`](src/styles.css) (variables `--bg-*`, `--ink`, `--accent`).
+Los colores están en [`src/styles.css`](src/styles.css) (bloque `:root`, lila principal).
+
+## Collage de fotos (botón sorpresa)
+
+- El botón aparece **bloqueado** y se **desbloquea solo** al llegar `UNLOCK_DATE`
+  (en [`src/config.js`](src/config.js)). Al desbloquearse dispara animaciones
+  (estallido de corazones, brillo, aros, pista "toca aquí" y vibración en móvil).
+- Valor real recomendado: el primer aniversario → `new Date(2026, 7, 30, 0, 0, 0)`.
+  Ahora está en **modo prueba** (hoy 22:00) — cámbialo antes de publicar.
+- El collage vive en la ruta `#collage`. Pon las imágenes en
+  [`public/fotos/`](public/fotos) y lístalas en `PHOTOS` dentro de `src/config.js`.
+  Si una foto falta, se muestra un marcador con un corazón.
 
 ## Desplegar en GitHub Pages (push manual, sin Actions)
 

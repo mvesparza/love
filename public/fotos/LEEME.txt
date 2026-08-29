@@ -1,0 +1,3 @@
+Pon aquí las fotos del collage: 01.jpg, 02.jpg, 03.jpg ...
+Luego ajusta la lista PHOTOS en src/config.js (nombres y textos).
+Formatos: jpg, png o webp. Recomendado <= 1600px de ancho para que cargue rápido.

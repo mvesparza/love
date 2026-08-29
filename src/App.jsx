@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react'
-import { START_DATE, DATE_LABEL, TITLE, TAGLINE, NAMES, FOOTER } from './config.js'
+import {
+  START_DATE, UNLOCK_DATE, DATE_LABEL, TITLE, TAGLINE, NAMES, FOOTER,
+} from './config.js'
 import { getElapsed } from './elapsed.js'
 import {
   IconYears, IconMonths, IconWeeks, IconDays,
   IconHours, IconMinutes, IconSeconds, IconHeart,
 } from './Icons.jsx'
+import Petals from './Petals.jsx'
+import LockButton from './LockButton.jsx'
+import Collage from './Collage.jsx'
 
 // Cinta inferior: el resto, como una línea de tiempo
 const RIBBON = [
@@ -17,22 +22,28 @@ const RIBBON = [
 
 export default function App() {
   const [now, setNow] = useState(() => new Date())
+  const [hash, setHash] = useState(() => window.location.hash)
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000)
-    return () => clearInterval(id)
+    const onHash = () => setHash(window.location.hash)
+    window.addEventListener('hashchange', onHash)
+    return () => {
+      clearInterval(id)
+      window.removeEventListener('hashchange', onHash)
+    }
   }, [])
+
+  const unlocked = now.getTime() >= UNLOCK_DATE.getTime()
+
+  if (hash === '#collage' && unlocked) return <Collage />
 
   const e = getElapsed(START_DATE, now)
   const pad = (n) => String(n).padStart(2, '0')
 
   return (
     <main className="screen">
-      <div className="petals" aria-hidden="true">
-        {Array.from({ length: 9 }).map((_, i) => (
-          <IconHeart key={i} className={`petal p${i}`} width={18} height={18} />
-        ))}
-      </div>
+      <Petals />
 
       <section className="card">
         <p className="kicker">
@@ -76,6 +87,8 @@ export default function App() {
             </li>
           ))}
         </ul>
+
+        <LockButton unlockDate={UNLOCK_DATE} />
 
         <p className="names">
           <IconHeart width={13} height={13} />

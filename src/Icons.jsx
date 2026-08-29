@@ -92,3 +92,42 @@ export function IconHeartPulse(p) {
     </svg>
   )
 }
+
+export function IconLock(p) {
+  return (
+    <svg {...base} {...p}>
+      <rect x="4" y="11" width="16" height="10" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+      <circle cx="12" cy="16" r="1" />
+    </svg>
+  )
+}
+
+export function IconImages(p) {
+  return (
+    <svg {...base} {...p}>
+      <rect x="3" y="3" width="14" height="14" rx="2" />
+      <path d="M21 7v12a2 2 0 0 1-2 2H7" />
+      <circle cx="8" cy="8" r="1.5" />
+      <path d="M3 13l3-3 4 4 3-3 4 4" />
+    </svg>
+  )
+}
+
+export function IconTap(p) {
+  return (
+    <svg {...base} {...p}>
+      <path d="M9 11V6a2 2 0 0 1 4 0v5" />
+      <path d="M13 11V8a2 2 0 0 1 4 0v3" />
+      <path d="M17 11a2 2 0 0 1 4 0v3a7 7 0 0 1-7 7h-1.5a6 6 0 0 1-4.6-2.1L4 16.5a2 2 0 0 1 3-2.6l2 1.6" />
+    </svg>
+  )
+}
+
+export function IconArrowLeft(p) {
+  return (
+    <svg {...base} {...p}>
+      <path d="M19 12H5M12 19l-7-7 7-7" />
+    </svg>
+  )
+}
