@@ -31,18 +31,23 @@ export const FOOTER = 'te amo'
 
 Los colores están en [`src/styles.css`](src/styles.css) (variables `--bg-*`, `--ink`, `--accent`).
 
-## Desplegar en GitHub Pages
+## Desplegar en GitHub Pages (push manual, sin Actions)
 
-1. Crea un repo en GitHub y sube el proyecto:
+El código fuente vive en `main`. La versión compilada se publica en la
+rama `gh-pages` con un comando.
+
+1. Una sola vez, en **Settings → Pages → Build and deployment**:
+   - **Source**: `Deploy from a branch`
+   - **Branch**: `gh-pages` · carpeta `/ (root)` · Save
+2. Cada vez que quieras publicar cambios:
    ```bash
-   git add .
-   git commit -m "detalle"
-   git branch -M main
-   git remote add origin https://github.com/USUARIO/REPO.git
-   git push -u origin main
+   npm run deploy
    ```
-2. En GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. Cada `push` a `main` publica el sitio en `https://USUARIO.github.io/REPO/`.
+   Esto hace `vite build` y sube `dist/` a la rama `gh-pages`.
+3. El sitio queda en `https://USUARIO.github.io/REPO/` (~1-2 min tras el primer deploy).
+
+> El `git push` normal a `main` solo guarda el código, **no** publica el sitio.
+> Publicar = `npm run deploy`.
 
 ## Generar el QR
 
