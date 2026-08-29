@@ -1,15 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
-import { IconLock, IconImages, IconHeart, IconTap } from './Icons.jsx'
+import { BUTTON_LABEL } from './config.js'
+import { IconHeartLock, IconBookHeart, IconHeart } from './Icons.jsx'
 
-// Cuenta regresiva corta hasta el desbloqueo: "2d 04:12:33"
-function formatLeft(ms) {
+// Tiempo restante hasta `target` desglosado en días/horas/min/seg
+function getRemaining(ms) {
   const s = Math.max(0, Math.floor(ms / 1000))
-  const d = Math.floor(s / 86400)
-  const h = String(Math.floor((s % 86400) / 3600)).padStart(2, '0')
-  const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0')
-  const sec = String(s % 60).padStart(2, '0')
-  return `${d}d ${h}:${m}:${sec}`
+  return {
+    days: Math.floor(s / 86400),
+    hours: Math.floor((s % 86400) / 3600),
+    minutes: Math.floor((s % 3600) / 60),
+    seconds: s % 60,
+  }
 }
+
+const CD_UNITS = [
+  ['days', 'días'],
+  ['hours', 'horas'],
+  ['minutes', 'min'],
+  ['seconds', 'seg'],
+]
 
 function Burst() {
   return (
@@ -54,12 +63,22 @@ export default function LockButton({ unlockDate }) {
   }, [unlocked])
 
   if (!unlocked) {
+    const r = getRemaining(target - now)
     return (
-      <div className="lock locked" role="note" aria-label="Contenido bloqueado">
+      <div className="lock locked" role="note" aria-label="Cuenta regresiva">
         <span className="lock-shimmer" aria-hidden="true" />
-        <IconLock className="lock-ico" width={22} height={22} />
-        <span className="lock-text">una sorpresa te espera</span>
-        <span className="lock-sub">se abre en {formatLeft(target - now)}</span>
+        <p className="cd-title">
+          <IconHeartLock width={16} height={16} />
+          nuestro día se acerca
+        </p>
+        <div className="cd-grid">
+          {CD_UNITS.map(([key, label]) => (
+            <div className="cd-cell" key={key}>
+              <span className="cd-num">{String(r[key]).padStart(2, '0')}</span>
+              <span className="cd-lbl">{label}</span>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
@@ -70,13 +89,10 @@ export default function LockButton({ unlockDate }) {
       <a className="lock-btn" href="#collage">
         <span className="lb-rings" aria-hidden="true"><i /><i /><i /></span>
         <span className="lb-shine" aria-hidden="true" />
-        <IconImages className="lb-ico" width={20} height={20} />
-        <span className="lb-label">Abrir nuestro collage</span>
+        <IconBookHeart className="lb-ico" width={20} height={20} />
+        <span className="lb-label">{BUTTON_LABEL}</span>
         <IconHeart className="lb-heart" width={16} height={16} />
       </a>
-      <span className="lock-hint">
-        <IconTap width={16} height={16} /> ¡toca aquí!
-      </span>
     </div>
   )
 }

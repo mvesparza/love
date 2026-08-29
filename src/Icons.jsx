@@ -93,33 +93,34 @@ export function IconHeartPulse(p) {
   )
 }
 
-export function IconLock(p) {
+// Corazón con cerradura: estado "bloqueado"
+export function IconHeartLock(p) {
   return (
     <svg {...base} {...p}>
-      <rect x="4" y="11" width="16" height="10" rx="2" />
-      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-      <circle cx="12" cy="16" r="1" />
+      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+      <circle cx="12" cy="10" r="1.7" />
+      <path d="M12 11.7V15" />
     </svg>
   )
 }
 
-export function IconImages(p) {
+// Diario con corazón: "memorias"
+export function IconBookHeart(p) {
   return (
     <svg {...base} {...p}>
-      <rect x="3" y="3" width="14" height="14" rx="2" />
-      <path d="M21 7v12a2 2 0 0 1-2 2H7" />
-      <circle cx="8" cy="8" r="1.5" />
-      <path d="M3 13l3-3 4 4 3-3 4 4" />
+      <path d="M5 4a2 2 0 0 1 2-2h13v18H7a2 2 0 0 0-2 2z" />
+      <path d="M5 20a2 2 0 0 0 2 2h13" />
+      <path d="M12.5 12.5c1.6-1.3 3-2.3 3-3.8 0-1-.8-1.7-1.7-1.7-.7 0-1.1.3-1.3.7-.2-.4-.6-.7-1.3-.7-.9 0-1.7.7-1.7 1.7 0 1.5 1.4 2.5 3 3.8Z" />
     </svg>
   )
 }
 
-export function IconTap(p) {
+// Destellos: adorno mágico
+export function IconSparkles(p) {
   return (
     <svg {...base} {...p}>
-      <path d="M9 11V6a2 2 0 0 1 4 0v5" />
-      <path d="M13 11V8a2 2 0 0 1 4 0v3" />
-      <path d="M17 11a2 2 0 0 1 4 0v3a7 7 0 0 1-7 7h-1.5a6 6 0 0 1-4.6-2.1L4 16.5a2 2 0 0 1 3-2.6l2 1.6" />
+      <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z" />
+      <path d="M18 14l.7 2 2 .7-2 .7L18 20l-.7-2-2-.7 2-.7z" />
     </svg>
   )
 }
