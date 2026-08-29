@@ -7,7 +7,7 @@
 <title>Un Juntos Por Siempre</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
 /* ===== Vista previa estática. Muestra los DOS estados del botón sorpresa a la vez. ===== */
 :root{
@@ -87,7 +87,8 @@ body{
 @keyframes cta-ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.55);opacity:0}}
 .lock-btn{border:0;font-family:inherit;cursor:pointer}
 .lock-btn.is-locked{margin-top:12px;animation:none;background:linear-gradient(120deg,#c3b3d4,#d6c0d0);box-shadow:0 10px 22px -12px rgba(120,80,160,.55)}
-.balloon{position:absolute;z-index:60;max-width:82vw;padding:10px 16px;border-radius:20px;background:linear-gradient(120deg,var(--lilac-deep),var(--rose));color:#fff;font-weight:600;font-size:.9rem;white-space:nowrap;text-align:center;box-shadow:0 16px 34px -10px rgba(150,70,139,.6)}
+.balloon{z-index:60;padding:9px 18px;border-radius:22px;background:linear-gradient(120deg,var(--lilac-deep),var(--rose));color:#fff;font-family:'Baloo 2','Poppins',sans-serif;font-weight:700;font-size:1rem;white-space:nowrap;text-align:center;box-shadow:0 16px 34px -10px rgba(150,70,139,.6)}
+.balloons-demo{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
 </style>
 </head>
 <body>
@@ -161,7 +162,11 @@ body{
       <svg class="lb-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><circle cx="12" cy="10" r="1.7"/><path d="M12 11.7V15"/></svg>
       <span class="lb-label">Memorias del corazón</span>
     </button>
-    <span class="balloon" style="left:50%;top:-14px;transform:translateX(-50%)">🫢 tramposita debes esperar 🫣</span>
+    <div class="balloons-demo">
+      <span class="balloon">🫢 tramposita debes esperar 🫣</span>
+      <span class="balloon">paciencia amoor 🙄</span>
+      <span class="balloon">oyeee 😠😠</span>
+    </div>
   </div>
 
   <!-- estado DESBLOQUEADO (al marcar 1 año) -->

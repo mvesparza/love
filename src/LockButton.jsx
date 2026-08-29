@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { BUTTON_LABEL, COUNTDOWN_LABEL, LOCKED_MESSAGE } from './config.js'
+import { BUTTON_LABEL, COUNTDOWN_LABEL, LOCKED_MESSAGES } from './config.js'
 import { IconHeartLock, IconBookHeart, IconHeart } from './Icons.jsx'
 
 // Tiempo restante hasta `target` desglosado en días/horas/min/seg
@@ -78,7 +78,8 @@ export default function LockButton({ unlockDate }) {
         '--rot': `${(Math.random() * 2 - 1) * 10}deg`,
         '--dur': `${3 + Math.random() * 1.3}s`,
       }
-      return [...list, { id: Date.now() + Math.random(), style }]
+      const msg = LOCKED_MESSAGES[Math.floor(Math.random() * LOCKED_MESSAGES.length)]
+      return [...list, { id: Date.now() + Math.random(), style, msg }]
     })
     try { navigator.vibrate?.(30) } catch { /* no-op */ }
   }
@@ -116,7 +117,7 @@ export default function LockButton({ unlockDate }) {
               style={b.style}
               onAnimationEnd={() => dropBalloon(b.id)}
             >
-              {LOCKED_MESSAGE}
+              {b.msg}
             </span>
           )),
           document.body,

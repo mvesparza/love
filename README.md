@@ -37,8 +37,9 @@ Los colores están en [`src/styles.css`](src/styles.css) (bloque `:root`, lila p
   horas, min, seg) hasta `UNLOCK_DATE` (en [`src/config.js`](src/config.js)).
   Al llegar a cero se transforma en el botón y dispara animaciones (estallido
   de corazones, brillo, aros, vibración en móvil).
-- Valor real recomendado: el primer aniversario → `new Date(2026, 7, 30, 0, 0, 0)`.
-  Ahora está en **modo prueba** — cámbialo antes de publicar de verdad.
+- Configurado al primer aniversario: `new Date(2026, 7, 30, 0, 0, 0)` (30 ago 2026, 00:00).
+- Si tocas el botón aún bloqueado, sale un globo con un mensaje al azar
+  de `LOCKED_MESSAGES`.
 - El collage vive en la ruta `#collage`. Pon las imágenes en
   [`public/fotos/`](public/fotos) y lístalas en `PHOTOS` dentro de `src/config.js`.
   Si una foto falta, se muestra un marcador con un corazón.
