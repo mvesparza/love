@@ -390,9 +390,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 9px;
+  margin: 0;
   padding: 14px clamp(18px, 5vw, 26px);
+  border: 0;
   border-radius: 20px;
   text-decoration: none;
+  font-family: inherit;
   font-weight: 600;
   font-size: clamp(0.9rem, 3.6vw, 0.98rem);
   letter-spacing: 0.01em;
@@ -402,11 +405,56 @@ body {
   background: linear-gradient(120deg, var(--lilac-deep), var(--lilac) 45%, var(--rose));
   box-shadow: 0 14px 34px -10px rgba(150, 70, 139, 0.7);
   overflow: hidden;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
   animation: cta-pop 1.9s ease-in-out infinite;
 }
 .lock-btn:active { transform: scale(0.96); }
 .lb-ico, .lb-heart { position: relative; z-index: 2; flex: none; }
 .lb-label { position: relative; z-index: 2; }
+
+/* botón en estado bloqueado: visible pero apagado */
+.lock-btn.is-locked {
+  margin-top: 12px;
+  animation: none;
+  background: linear-gradient(120deg, #c3b3d4, #d6c0d0);
+  box-shadow: 0 10px 22px -12px rgba(120, 80, 160, 0.55);
+}
+.lock-btn.is-locked .lb-ico { opacity: 0.92; }
+
+/* globo "tramposita" */
+.balloon {
+  position: fixed;
+  left: var(--x);
+  top: var(--y);
+  z-index: 60;
+  max-width: 82vw;
+  padding: 10px 16px;
+  border-radius: 20px;
+  background: linear-gradient(120deg, var(--lilac-deep), var(--rose));
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.25;
+  box-shadow: 0 16px 34px -10px rgba(150, 70, 139, 0.6);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+  animation: balloon-fly var(--dur) ease-in-out forwards;
+}
+@keyframes balloon-fly {
+  0%   { transform: translate(-50%, -50%) scale(0.4) rotate(0deg); opacity: 0; }
+  12%  { transform: translate(-50%, -50%) scale(1) rotate(var(--rot)); opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(calc(var(--rot) * -1)); opacity: 0; }
+}
+@keyframes balloon-still {
+  0% { opacity: 0; }
+  15%, 78% { opacity: 1; }
+  100% { opacity: 0; }
+}
 .lb-heart { fill: currentColor; animation: beat 1.4s ease-in-out infinite; }
 
 @keyframes cta-pop {
@@ -559,4 +607,5 @@ body {
   .petal, .hh-icon, .hh-glow, .hh-ring, .cd-title svg,
   .lock-shimmer, .lock-btn, .lb-shine, .lb-rings i, .lb-heart { animation: none; }
   .hh-ring, .petal, .lb-rings, .burst { display: none; }
+  .balloon { animation: balloon-still 2.6s ease forwards; }
 }

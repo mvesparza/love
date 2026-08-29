@@ -16,10 +16,12 @@ export const FOOTER = 'te amo'
 // REAL (primer aniversario): 30 de agosto de 2026, 00:00
 //   export const UNLOCK_DATE = new Date(2026, 7, 30, 0, 0, 0)
 //
-// PRUEBA activa: hoy a las 22:20
-export const UNLOCK_DATE = new Date(2026, 7, 28, 22, 20, 0)
+// PRUEBA activa: hoy a las 22:25
+export const UNLOCK_DATE = new Date(2026, 7, 28, 22, 25, 0)
 
 export const BUTTON_LABEL = 'Memorias del corazón' // texto del botón sorpresa
+export const COUNTDOWN_LABEL = 'muy pronto' // texto sobre la cuenta regresiva
+export const LOCKED_MESSAGE = '🫢 tramposita debes esperar 🫣' // globo al tocar bloqueado
 
 // Fotos del collage.
 // 1) Copia tus imágenes dentro de la carpeta  public/fotos/

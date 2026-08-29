@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { BUTTON_LABEL } from './config.js'
+import { createPortal } from 'react-dom'
+import { BUTTON_LABEL, COUNTDOWN_LABEL, LOCKED_MESSAGE } from './config.js'
 import { IconHeartLock, IconBookHeart, IconHeart } from './Icons.jsx'
 
 // Tiempo restante hasta `target` desglosado en días/horas/min/seg
@@ -41,6 +42,8 @@ function Burst() {
 
 export default function LockButton({ unlockDate }) {
   const [now, setNow] = useState(() => Date.now())
+  const [balloons, setBalloons] = useState([])
+
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000)
     return () => clearInterval(id)
@@ -62,6 +65,26 @@ export default function LockButton({ unlockDate }) {
     }
   }, [unlocked])
 
+  const spawnBalloon = () => {
+    setBalloons((list) => {
+      if (list.length >= 4) return list
+      const dx = (Math.random() * 2 - 1) * 130
+      const dy = -70 - Math.random() * 170
+      const style = {
+        '--x': `${16 + Math.random() * 56}vw`,
+        '--y': `${28 + Math.random() * 42}vh`,
+        '--dx': `${dx}px`,
+        '--dy': `${dy}px`,
+        '--rot': `${(Math.random() * 2 - 1) * 10}deg`,
+        '--dur': `${3 + Math.random() * 1.3}s`,
+      }
+      return [...list, { id: Date.now() + Math.random(), style }]
+    })
+    try { navigator.vibrate?.(30) } catch { /* no-op */ }
+  }
+
+  const dropBalloon = (id) => setBalloons((l) => l.filter((b) => b.id !== id))
+
   if (!unlocked) {
     const r = getRemaining(target - now)
     return (
@@ -69,7 +92,7 @@ export default function LockButton({ unlockDate }) {
         <span className="lock-shimmer" aria-hidden="true" />
         <p className="cd-title">
           <IconHeartLock width={16} height={16} />
-          nuestro día se acerca
+          {COUNTDOWN_LABEL}
         </p>
         <div className="cd-grid">
           {CD_UNITS.map(([key, label]) => (
@@ -79,6 +102,25 @@ export default function LockButton({ unlockDate }) {
             </div>
           ))}
         </div>
+
+        <button type="button" className="lock-btn is-locked" onClick={spawnBalloon}>
+          <IconHeartLock className="lb-ico" width={18} height={18} />
+          <span className="lb-label">{BUTTON_LABEL}</span>
+        </button>
+
+        {createPortal(
+          balloons.map((b) => (
+            <span
+              key={b.id}
+              className="balloon"
+              style={b.style}
+              onAnimationEnd={() => dropBalloon(b.id)}
+            >
+              {LOCKED_MESSAGE}
+            </span>
+          )),
+          document.body,
+        )}
       </div>
     )
   }
