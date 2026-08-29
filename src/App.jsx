@@ -36,7 +36,9 @@ export default function App() {
 
   const unlocked = now.getTime() >= UNLOCK_DATE.getTime()
 
-  if (hash === '#collage' && unlocked) return <Collage />
+  // en producción el feed solo abre tras el desbloqueo; en `npm run dev`
+  // se puede ver siempre abriendo la ruta #collage
+  if (hash === '#collage' && (unlocked || import.meta.env.DEV)) return <Collage />
 
   const e = getElapsed(START_DATE, now)
   const pad = (n) => String(n).padStart(2, '0')

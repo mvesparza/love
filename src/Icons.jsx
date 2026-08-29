@@ -132,3 +132,36 @@ export function IconArrowLeft(p) {
     </svg>
   )
 }
+
+// Estetoscopio (ella es médico)
+export function IconStethoscope(p) {
+  return (
+    <svg {...base} {...p}>
+      <path d="M4 3H3a1 1 0 0 0-1 1v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a1 1 0 0 0-1-1h-1" />
+      <path d="M8 15v2a6 6 0 0 0 12 0v-3" />
+      <circle cx="20" cy="10" r="2" />
+    </svg>
+  )
+}
+
+// Laptop (él es programador)
+export function IconLaptop(p) {
+  return (
+    <svg {...base} {...p}>
+      <rect x="4" y="4" width="16" height="12" rx="2" />
+      <path d="M2 20h20M10 8l-2 2 2 2M14 8l2 2-2 2" />
+    </svg>
+  )
+}
+
+// Girasol (su flor favorita)
+export function IconSunflower(p) {
+  return (
+    <svg {...base} {...p}>
+      {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+        <ellipse key={a} cx="12" cy="5.4" rx="2" ry="3.4" transform={`rotate(${a} 12 12)`} />
+      ))}
+      <circle cx="12" cy="12" r="3.1" />
+    </svg>
+  )
+}
