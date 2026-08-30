@@ -68,6 +68,7 @@ export default function LockButton({ unlockDate }) {
     if (!ok && typeof navigator.vibrate === 'function') {
       const buzz = () => { try { navigator.vibrate(CELEBRATE_VIBE) } catch { /* no-op */ } }
       window.addEventListener('pointerdown', buzz, { once: true })
+      return () => window.removeEventListener('pointerdown', buzz)
     }
   }, [unlocked])
 

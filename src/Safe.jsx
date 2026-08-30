@@ -1,6 +1,7 @@
 import { Component } from 'react'
 
-// Aísla un subárbol: si algo dentro falla, no tumba la página, solo se oculta.
+// Aísla un subárbol: si algo dentro falla, no tumba la página.
+// Muestra `fallback` (o nada si no se pasa).
 export default class Safe extends Component {
   state = { failed: false }
 
@@ -10,10 +11,11 @@ export default class Safe extends Component {
 
   componentDidCatch(err) {
     // eslint-disable-next-line no-console
-    console.error('Safe: subárbol falló y se ocultó', err)
+    console.error('Safe: subárbol falló', err)
   }
 
   render() {
-    return this.state.failed ? null : this.props.children
+    if (this.state.failed) return this.props.fallback ?? null
+    return this.props.children
   }
 }

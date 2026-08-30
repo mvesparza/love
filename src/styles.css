@@ -519,9 +519,9 @@ body {
   position: absolute;
   bottom: -10vh;
   fill: currentColor;
+  stroke: none;
   color: #e0708c;
   filter: drop-shadow(0 4px 12px rgba(216, 116, 171, 0.5));
-  will-change: transform, opacity;
   animation: hs-rise var(--dur) cubic-bezier(0.32, 0, 0.36, 1) forwards;
 }
 .hs-t1 { color: #b58cc7; }

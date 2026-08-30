@@ -14,7 +14,8 @@ const WAVES = [
   { at: 2120, n: 16 },
   { at: 2480, n: 40 }, // final: lluvia grande
 ]
-const LIFE_MS = 7200
+// margen para que hasta el corazón más lento termine su animación (2480 + 180 delay + 5980 dur)
+const LIFE_MS = 8900
 
 function makeHeart(id) {
   const size = 14 + Math.random() * 24
@@ -43,6 +44,10 @@ export default function HeartStorm({ onDone }) {
   useEffect(() => {
     let count = 0
     const timers = []
+    let life = LIFE_MS
+    try {
+      if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) life = 2800
+    } catch { /* no-op */ }
 
     WAVES.forEach((w) => {
       timers.push(
@@ -56,15 +61,22 @@ export default function HeartStorm({ onDone }) {
       )
     })
 
-    timers.push(setTimeout(() => doneRef.current?.(), LIFE_MS))
+    timers.push(setTimeout(() => doneRef.current?.(), life))
     return () => timers.forEach(clearTimeout)
   }, [])
+
+  const remove = (id) => setHearts((prev) => prev.filter((x) => x.id !== id))
 
   return createPortal(
     <div className="heartstorm" aria-hidden="true">
       <div className={`hs-glow${pulse ? ' is-pulse' : ''}`} />
       {hearts.map((h) => (
-        <IconHeart key={h.id} className={`hs-heart hs-t${h.tone}`} style={h.style} />
+        <IconHeart
+          key={h.id}
+          className={`hs-heart hs-t${h.tone}`}
+          style={h.style}
+          onAnimationEnd={() => remove(h.id)}
+        />
       ))}
     </div>,
     document.body,
