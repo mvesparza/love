@@ -13,7 +13,7 @@ export const FOOTER = 'te amo'
 // ── Desbloqueo del collage de fotos ────────────────────────
 // El botón aparece bloqueado y se abre solo al llegar este momento.
 //
-export const UNLOCK_DATE = new Date(2026, 7, 30, 0, 0, 0) // 30 de agosto de 2026, 00:00
+export const UNLOCK_DATE = new Date(2026, 7, 30, 10, 0, 0) // 30 de agosto de 2026, 10:00 am
 
 export const BUTTON_LABEL = 'Memorias del corazón' // texto del botón sorpresa
 export const COUNTDOWN_LABEL = 'muy pronto' // texto sobre la cuenta regresiva
