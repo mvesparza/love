@@ -1,7 +1,7 @@
 // ── Configuración del detalle ──────────────────────────────
 // Fecha y hora de inicio de la cuenta (hora local del dispositivo).
 // Formato: año, mes (1-12 → aquí 0-11), día, hora, minuto, segundo
-export const START_DATE = new Date(2025, 7, 30, 0, 0, 0) // 30 de agosto de 2025, 00:00
+export const START_DATE = new Date(2025, 7, 30, 10, 0, 0) // 30 de agosto de 2025, 10:00 am
 
 // Textos editables (sin repetir ideas entre ellos)
 export const DATE_LABEL = '30 · 08 · 2025' // se muestra arriba, en dorado
