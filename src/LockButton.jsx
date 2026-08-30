@@ -2,6 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { BUTTON_LABEL, COUNTDOWN_LABEL, LOCKED_MESSAGES } from './config.js'
 import { IconHeartLock, IconBookHeart, IconHeart } from './Icons.jsx'
+import HeartStorm from './HeartStorm.jsx'
+import Safe from './Safe.jsx'
+
+// Patrón de vibración del desbloqueo (Android). [vibra, pausa, vibra, ...] en ms.
+// Ritmo de latido + subida final; los tiempos coinciden con WAVES de HeartStorm.
+const CELEBRATE_VIBE = [
+  160, 100, 160, 100, 160, 380,
+  160, 100, 160, 100, 160, 380,
+  240, 120,
+  900,
+]
+const CELEBRATED_KEY = 'anni-celebrated'
 
 // Tiempo restante hasta `target` desglosado en días/horas/min/seg
 function getRemaining(ms) {
@@ -21,28 +33,10 @@ const CD_UNITS = [
   ['seconds', 'seg'],
 ]
 
-function Burst() {
-  return (
-    <div className="burst" aria-hidden="true">
-      {Array.from({ length: 20 }).map((_, i) => {
-        const angle = (i / 20) * 360 + Math.random() * 14
-        const dist = 70 + Math.random() * 80
-        const rad = (angle * Math.PI) / 180
-        const style = {
-          '--tx': `${Math.cos(rad) * dist}px`,
-          '--ty': `${Math.sin(rad) * dist}px`,
-          '--dur': `${0.7 + Math.random() * 0.6}s`,
-          animationDelay: `${Math.random() * 0.25}s`,
-        }
-        return <IconHeart key={i} className="burst-h" style={style} width={13} height={13} />
-      })}
-    </div>
-  )
-}
-
 export default function LockButton({ unlockDate }) {
   const [now, setNow] = useState(() => Date.now())
   const [balloons, setBalloons] = useState([])
+  const [storm, setStorm] = useState(false)
 
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000)
@@ -52,16 +46,28 @@ export default function LockButton({ unlockDate }) {
   const target = unlockDate.getTime()
   const unlocked = now >= target
 
-  const wasUnlocked = useRef(unlocked)
-  const [burst, setBurst] = useState(false)
+  const handled = useRef(false)
 
   useEffect(() => {
-    if (unlocked && !wasUnlocked.current) {
-      wasUnlocked.current = true
-      setBurst(true)
-      try { navigator.vibrate?.([90, 40, 90, 40, 180]) } catch { /* no-op */ }
-      const t = setTimeout(() => setBurst(false), 5200)
-      return () => clearTimeout(t)
+    if (!unlocked || handled.current) return
+    handled.current = true
+
+    // celebrar una sola vez por dispositivo (cubre tanto el momento en vivo
+    // como la primera visita cuando ya está desbloqueado)
+    let already = false
+    try { already = localStorage.getItem(CELEBRATED_KEY) === '1' } catch { /* no-op */ }
+    if (already) return
+    try { localStorage.setItem(CELEBRATED_KEY, '1') } catch { /* no-op */ }
+
+    setStorm(true)
+
+    // Vibración (Android). Los navegadores la bloquean si el usuario aún no ha
+    // tocado la página, así que si falla la re-lanzamos en el primer toque.
+    let ok = false
+    try { ok = navigator.vibrate?.(CELEBRATE_VIBE) === true } catch { /* no-op */ }
+    if (!ok && typeof navigator.vibrate === 'function') {
+      const buzz = () => { try { navigator.vibrate(CELEBRATE_VIBE) } catch { /* no-op */ } }
+      window.addEventListener('pointerdown', buzz, { once: true })
     }
   }, [unlocked])
 
@@ -127,8 +133,12 @@ export default function LockButton({ unlockDate }) {
   }
 
   return (
-    <div className={`lock unlocked${burst ? ' is-burst' : ''}`}>
-      {burst && <Burst />}
+    <div className="lock unlocked">
+      {storm && (
+        <Safe>
+          <HeartStorm onDone={() => setStorm(false)} />
+        </Safe>
+      )}
       <a className="lock-btn" href="#collage">
         <span className="lb-rings" aria-hidden="true"><i /><i /><i /></span>
         <span className="lb-shine" aria-hidden="true" />

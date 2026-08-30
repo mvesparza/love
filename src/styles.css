@@ -498,25 +498,48 @@ body {
   100% { transform: scale(1.55); opacity: 0; }
 }
 
-/* estallido de corazones al desbloquear */
-.burst {
-  position: absolute;
-  left: 50%;
-  top: 24px;
-  width: 0; height: 0;
-  z-index: 5;
+/* ── lluvia de corazones al cumplirse el año ── */
+.heartstorm {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  overflow: hidden;
   pointer-events: none;
 }
-.burst-h {
+.hs-glow {
   position: absolute;
-  color: var(--rose);
-  fill: var(--rose);
+  inset: 0;
+  background: radial-gradient(130% 90% at 50% 100%, rgba(216, 116, 171, 0.4), transparent 62%);
   opacity: 0;
-  animation: burst var(--dur) ease-out forwards;
+  transition: opacity 0.16s ease;
 }
-@keyframes burst {
-  0% { transform: translate(0, 0) scale(0.3); opacity: 1; }
-  100% { transform: translate(var(--tx), var(--ty)) scale(1.1); opacity: 0; }
+.hs-glow.is-pulse { opacity: 1; }
+
+.hs-heart {
+  position: absolute;
+  bottom: -10vh;
+  fill: currentColor;
+  color: #e0708c;
+  filter: drop-shadow(0 4px 12px rgba(216, 116, 171, 0.5));
+  will-change: transform, opacity;
+  animation: hs-rise var(--dur) cubic-bezier(0.32, 0, 0.36, 1) forwards;
+}
+.hs-t1 { color: #b58cc7; }
+.hs-t2 { color: #f2a6cb; }
+
+@keyframes hs-rise {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(0.3);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+    transform: translate(calc(var(--sway) * 0.35), -12vh) rotate(calc(var(--rot) * 0.35)) scale(1);
+  }
+  100% {
+    transform: translate(var(--sway), calc(var(--rise) * -1)) rotate(var(--rot)) scale(1);
+    opacity: 0;
+  }
 }
 
 /* ── feed "Nuestra historia" (línea de tiempo, tema oscuro) ── */
@@ -852,7 +875,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .petal, .hh-icon, .hh-glow, .hh-ring, .cd-title svg,
   .lock-shimmer, .lock-btn, .lb-shine, .lb-rings i, .lb-heart { animation: none; }
-  .hh-ring, .petal, .lb-rings, .burst { display: none; }
+  .hh-ring, .petal, .lb-rings { display: none; }
+  .heartstorm .hs-heart { animation-duration: 2s; }
+  .hs-glow { transition: none; }
   .balloon { animation: balloon-still 2.6s ease forwards; }
   .post, .feed-note { opacity: 1; transform: none; transition: none; }
   .floaties { display: none; }
